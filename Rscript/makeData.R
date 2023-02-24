@@ -28,7 +28,11 @@ head(table(z[,2]))# 確認店家代號是會有重複的
 # 把上面的資料一邊整理，一邊匯出一個新的資料(output)
 
 ## 先把後面的銷售數量放到output中
-output <- z[-c(1:2),-c(1:2)]
+output <- z[-c(1:2),-c(1:2)] # 資料中有一個欄位不符合，需要修改
+str(output) # 2022-01的資料是字串
+for(i in 1:dim(output)[2]){
+  output[,i] <- as.numeric(output[,i])
+}
 colnames(output) <- DateData
 head(output)
 ## 先把欄位重新排序
@@ -40,7 +44,7 @@ Number <- as.character(as.numeric(z[-c(1:2),2]))
 item <- character(dim(output)[1])
 for(i in unique(z[-c(1:2),1])){
   if(!is.na(i)){
-    print(which((z[-c(1:2),1]) == i))
+    # print(which((z[-c(1:2),1]) == i))
     item[which((z[-c(1:2),1]) == i):length(item)] <- i
   }
 }
